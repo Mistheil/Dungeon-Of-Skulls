@@ -11,16 +11,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JProgressBar;
 public class game {
 	JFrame mainwindow;
 	Container cont;
-	JPanel title, startPanel, mainPanel, choicePanel, statsPanel;
-	JLabel titleName, titleName2, health, healthNum, weapon, weaponType;
+	JPanel title, startPanel, mainPanel, choicePanel, statsPanel, progressPanel;
+	JLabel titleName, titleName2, health, healthNum, weapon, weaponType, completion;
 	JButton startButton, choice1, choice2, choice3, choice4;
 	JTextArea textArea;
-	Color tosca, maroon, crimson, blood, black_red, gold, boneWhite, mossGreen, darkGreen, darkGray, navy, dongker, brown, dark_brown, coal_black;
+	JProgressBar gameProgress;
+	Color tosca, maroon, crimson, blood, black_red, gold, boneWhite, mossGreen, darkGreen, darkGray, navy, dongker, brown, dark_brown, coal_black,pink, yellow;
+	Boolean b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31;
 	Stack<String> playerHPBar = new Stack<String>();
-	int playerHP, visited, deal;
+	int playerHP, visited, deal, progress;
 	double strength, monsterHP, bossHP, damage;
 	String playerWeapon, position, healthBar, filepath;
 	Font titleFont = new Font("Courier New", Font.ITALIC, 60);
@@ -52,6 +55,13 @@ public class game {
 		coal_black= new Color(26, 26, 26)   ;    //Coal Black
 		dongker   = new Color(0, 23, 77)	;    //Dongker blue
 		darkGreen = new Color(18, 57, 0)	;    //Dark Green
+		pink	  = new Color(250, 184, 234);	 //pink
+		yellow   = new Color(255, 255, 77) ; 	 //yellow
+		
+		b1 = false;b2 = false;b3 = false;b4 = false;b5 = false;b6 = false;b7 = false;b8 = false;b9 = false;b10 = false;
+		b11 = false;b12 = false;b13 = false;b14 = false;b15 = false;b16 = false;b17 = false;b18 = false;b19 = false;b20 = false;
+		b1 = false;b21 = false;b22 = false;b23 = false;b24 = false;b25 = false;b26 = false;b27 = false;b28 = false;b29 = false;b30 = false;
+		b31 = false;  //bool buat completion bar
 		
 		mainwindow = new JFrame();		//Main Window
 		mainwindow.setSize(800, 600);
@@ -99,13 +109,34 @@ public class game {
 		mainPanel.setBackground(Color.blue);
 		cont.add(mainPanel);
 		
-		textArea = new JTextArea("Your Adventure Awaits!");
+		textArea = new JTextArea("Your Adventure Awaits!"); //text area
 		textArea.setBounds(65, 100, 650, 250);
 		textArea.setBackground(Color.black);
 		textArea.setForeground(Color.white);
 		textArea.setFont(normalFont);
 		textArea.setLineWrap(true);
+		textArea.setEditable(false);
 		mainPanel.add(textArea);
+		
+		progressPanel = new JPanel(); //Completion Bar
+		progressPanel.setBounds(180,521,600,30);
+		progressPanel.setBackground(Color.black);
+		progressPanel.setLayout(new GridLayout(1,2));
+		cont.add(progressPanel);
+		
+		completion = new JLabel("Completion Progress: ");
+		completion.setFont(normalFont);
+		completion.setForeground(Color.white);
+		progressPanel.add(completion);
+		progress = 0;
+		gameProgress = new JProgressBar(0,31);
+		gameProgress.setValue(progress);
+		gameProgress.setStringPainted(true);
+		gameProgress.setBackground(boneWhite);
+		gameProgress.setFont(normalFont);
+		gameProgress.setForeground(coal_black);
+		
+		progressPanel.add(gameProgress);
 		
 		choicePanel = new JPanel();  //Choices Button
 		choicePanel.setBounds(150, 370, 500, 130);
@@ -193,6 +224,11 @@ public class game {
 		return x;
 	}
 	
+	public void class1() {
+		position = "class1";
+		textArea.setText("Menurut kamu,\nkamu lebih cocok menjadi?");
+	}
+	
 	public void start1() {
 		position = "start1"; //Start
 		mainwindow.getContentPane().setBackground(brown);
@@ -222,6 +258,7 @@ public class game {
 		choice1.setText("Semangat!");
 	}
 	
+	
 	public void start3() {
 		position = "start3";
 		mainwindow.getContentPane().setBackground(dark_brown);
@@ -235,27 +272,40 @@ public class game {
 		weapon.setForeground(boneWhite);
 		weaponType.setForeground(boneWhite);
 		textArea.setText("Kamu menginjakkan langkahmu kedalam\ndan kamu menemukan gua tersebut bercabang\nmenjadi 2 lorong\n\nKamu memilih untuk kearah?");
-		choice1.setText("Kiri");
-		choice2.setText("Kanan");
+		choice1.setText("Rute 1");
+		choice2.setText("Rute 2");
+		choice3.setText("Rute 3");
+		choice4.setText("Rute 4");
 		choice2.setVisible(true);
+		choice3.setVisible(false);
+		choice4.setVisible(false);
 	}
 	
 	public void lorong1_1() {
 		position = "lorong1_1";  //first branch
-		mainwindow.getContentPane().setBackground(navy);
-		choicePanel.setBackground(navy);
-		mainPanel.setBackground(coal_black);
-		textArea.setBackground(coal_black);
-		statsPanel.setBackground(coal_black);
-		textArea.setForeground(boneWhite);
-		health.setForeground(boneWhite);
-		healthNum.setForeground(boneWhite);
-		weapon.setForeground(boneWhite);
-		weaponType.setForeground(boneWhite);
-		textArea.setText("Kamu memilih untuk menjelajahi lorong kiri. .\nMelewati lorong yang gelap gulita, akhirnya\nkamu menemukan sumber cahaya di ujung\nlorong. Kamu mengejar cahaya tersebut.");
-		choice1.setText("Uwau");
+		mainwindow.getContentPane().setBackground(navy); //mengubah warna window
+		choicePanel.setBackground(navy); //mengubah warna JPanel tombol
+		mainPanel.setBackground(coal_black); //mengubah warna JPanel text
+		textArea.setBackground(coal_black); //mengubah warna belakang text area
+		statsPanel.setBackground(coal_black); // mengubah warna belakang panel stats
+		textArea.setForeground(boneWhite);  //mengubah warna text pada text area
+		health.setForeground(boneWhite);  //mengubah warna text pada  nyawa
+		healthNum.setForeground(boneWhite);  //mengubah warna text pada jumlah nyawa
+		weapon.setForeground(boneWhite);  //mengubah warna text pada senjata
+		weaponType.setForeground(boneWhite);  //mengubah warna text pada jenis senjata
+		if (b1 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b1 = true;
+		}
+		textArea.setText("Kamu memilih untuk menjelajahi lorong paling kiri. .\nMelewati lorong yang gelap gulita, akhirnya\nkamu menemukan sumber cahaya di ujung\nlorong. Kamu mengejar cahaya tersebut.");
+		choice1.setText("Uwau");  //menentukan text pada tombol
 		choice2.setText("");
-		choice2.setVisible(false);
+		choice3.setText("");
+		choice4.setText("");
+		choice2.setVisible(false);  //menghilangkan atau memunculkan tombol pada GUI
+		choice3.setVisible(false);
+		choice4.setVisible(false);
 	}
 	
 	public void lorong1_2() {
@@ -274,6 +324,11 @@ public class game {
 	
 	public void lorong1_2_battle() {
 		position = "lorong1_2_battle";
+		if (b2 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b2 = true;
+		}
 		textArea.setText("Kamu meyiapkan senjatamu, siap menebas makhluk\ntersebut.");
 		choice1.setText("Serang!");
 	}
@@ -303,6 +358,11 @@ public class game {
 	public void lorong1_2_event() {
 		filepath = "Monster5.wav";
 		audio.playMusic(filepath);
+		if (b3 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b3 = true;
+		}
 		position = "lorong1_2_event";
 		mainwindow.getContentPane().setBackground(dongker);
 		choicePanel.setBackground(dongker);
@@ -317,6 +377,11 @@ public class game {
 	public void lorong1_2_event_2() {
 		filepath = "Evasion1.wav";
 		audio.playMusic(filepath);
+		if (b4 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b4 = true;
+		}
 		position = "lorong1_2_event_2";
 		textArea.setText("Kamu menggeserkan posisimu, menghindar dari\nserangan makhluk tersebut.\nSelagi lengah, kamu menebas makhluk tersebut\ndari belakang.\nMonster tersebut merintih kesakitan, kemudian runtuh menjadi tumpukan bulu yang menjijikan.");
 		choice1.setText("Next");
@@ -349,6 +414,11 @@ public class game {
 	
 	public void lorong1_2_defeat2() {	
 		position = "lorong1_2_defeat2";
+		if (b5 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b5 = true;
+		}
 		textArea.setText("Kamu mencoba menangkis serangannya,\ntetapi kamu kalah cepat dengannya.\nYang kamu tau lengannya sudah mencapai tubuhmu\ndan mewarnai tubuhmu dan lantai dengan merah\npekat.");
 		choice1.setText("Next");
 		choice2.setText("");
@@ -362,6 +432,11 @@ public class game {
 	public void lorong1_2_defeat3() {
 		filepath = "Parry.wav";
 		audio.playMusic(filepath);
+		if (b6 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b6 = true;
+		}
 		position = "lorong1_2_defeat3";
 		textArea.setText("Kamu berusaha menahan serangannya,\ntetapi monster tersebut menyerang terus\nmenerus tanpa ampun.\nPerlahan pertahananmu pecah dan badanmu\nterlontar, menabrak dinding . . .");
 		choice1.setText("Ugh...");
@@ -375,6 +450,11 @@ public class game {
 	
 	public void lorong1_3() {
 		position = "lorong1_3";
+		if (b7 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b7 = true;
+		}
 		textArea.setText("Kamu melanjutkan perjalanmu, melewati lorong\nyang gelap.\nKamu menemukan jalan yang bercabang\nke dua arah.\n\nApa yang kamu lakukan?");
 		choice1.setText("Lewat lorong kiri");
 		choice2.setText("Lewat lorong kanan");
@@ -385,6 +465,11 @@ public class game {
 	public void lorong1_3_kiri() {
 		position = "lorong1_3_kiri";
 		visited = 1;
+		if (b8 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b8 = true;
+		}
 		textArea.setText("Kamu memilih untuk kearah kiri . . .\n\nMenyusuri dinding, kamu menemukan jalan buntu dengan harta karun.\nApakah kamu ingin membukanya?");
 		choice1.setText("Iya");
 		choice2.setText("Tidak");
@@ -400,6 +485,11 @@ public class game {
 		}
 		healthBar = String.join("", playerHPBar);
 		healthNum.setText(healthBar);
+		if (b9 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b9 = true;
+		}
 		textArea.setText("Kamu membuka kotak terebut,\ndan kamu menemukan beberapa keping emas\ndan botol berisi cairan merah.\nKamu memilih untuk minum cairan tersebut...\n[Kamu merasa tambah sehat!]\nKamu kembali ke lorong sebelumnya . . .");
 		choice1.setText("Next");
 		choice2.setText("");
@@ -408,6 +498,11 @@ public class game {
 	
 	public void lorong1_3_kiri_3() {
 		position = "lorong1_3_kiri_3";
+		if (b10 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b10 = true;
+		}
 		textArea.setText("Kamu memilih untuk tidak membuka kotak tersebut.\nKamu takut kotak tersebut berisi perangkap\n\nKamu memilih untuk kembali . . .");
 		choice1.setText("Next");
 		choice2.setText("");
@@ -416,6 +511,11 @@ public class game {
 	
 	public void lorong1_3_kiri2() {
 		position = "lorong1_3_kiri2";
+		if (b11 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b11 = true;
+		}
 		textArea.setText("Kamu sudah menemukan jalan tersebut buntu,\ndan mengurungkan niat untuk kembali kesana. . .");
 		choice1.setText("Next");
 		choice2.setText("");
@@ -425,6 +525,11 @@ public class game {
 	
 	public void lorong1_3_kanan() {
 		position = "lorong1_3_kanan";
+		if (b12 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b12 = true;
+		}
 		textArea.setText("Kamu memilih untuk kearah kanan . . .\nBerjalan menyusuri lorong yang gelap, kamu\nmerasa lorong ini tidak ada habisnya.\nTapi akhirnya kamu menemukan sumber cahaya.\nKamu mengejar sumber tersebut . . .");
 		choice1.setText("Next");
 		choice2.setText("");
@@ -453,6 +558,11 @@ public class game {
 		weapon.setForeground(boneWhite);
 		weaponType.setForeground(boneWhite);
 		visited = 1;
+		if (b13 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b13 = true;
+		}
 		textArea.setText("Kamu memilih untuk melewati rute kedua.\nMelihat lorong yang gelap gulita dengan minim cahaya,\nkamu memberanikan dirimu melewati\njalan tersebut.\nGemetaran sambil memegang senjatamu ditangan,\nkamu tidak merasa sendiri disini. . .");
 		choice1.setText("Seram. . .");
 		choice2.setText("");
@@ -464,7 +574,6 @@ public class game {
 	}
 	
 	public void lorong2_1_2() {
-		
 		position = "lorong2_1_2";
 		textArea.setText("Kamu sudah melihat apa didalam sana!\nKamu enggan untuk melewati rute itu lagi . . .");
 		choice1.setText("Gamau lagi!");
@@ -473,6 +582,8 @@ public class game {
 		choice4.setText("");
 		choice2.setVisible(false);
 		choice3.setVisible(false);
+		choice4.setVisible(false);
+		
 	}
 	
 	public void lorong2_2() {
@@ -505,6 +616,11 @@ public class game {
 	public void lorong2_2_3() {
 		filepath = "Fire1.wav";
 		audio.playMusic(filepath);
+		if (b14 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b14 = true;
+		}
 		position = "lorong2_2_3";
 		textArea.setText("Seketika obor di ruangan tersebut\nmenjadi lebih terang,\ndan memperlihatkan isi dari ruangan tersebut.\nBelasan. Tidak, puluhan kadal kuning\nmengerumuni ruangan ini!\nPintu keluar juga terlihat sangat jauh. . .\nApa yang kamu lakukan?");
 		choice1.setText("Melarikan diri!");
@@ -520,6 +636,11 @@ public class game {
 	public void lorong2_2_run() {
 		filepath = "Move.wav";
 		audio.playMusic(filepath);
+		if (b15 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b15 = true;
+		}
 		position = "lorong2_2_run";
 		textArea.setText("'Tidak mungkin aku bisa bertahan hidup\nmelewati ini semua!'\nPikir dirimu. Ketakutan, kamu lansung balik\nbadan, dan melarikan diri sekuat tenagamu.\nTerkadang kamu menabrak dinding karena\nkamu kurang fokus,\ntetapi akhirnya kamu kembali ke awal lagi.\n[Kamu memilih untuk tidak kembali kesini.]");
 		choice1.setText("Ogah!");
@@ -535,6 +656,11 @@ public class game {
 	public void lorong2_2_defeat() {
 		filepath = "Bite.wav";
 		audio.playMusic(filepath);
+		if (b16 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b16 = true;
+		}
 		position = "lorong2_2_defeat";
 		textArea.setText("Kamu berpikir kamu dapat lari lebih cepat\ndibanding kadal ini,\njadi kamu mencoba untuk lari lansung ke ujung ruangan ini.\nSayangnya kamu menyepelekan kadal-kadal ini.\nTidak kamu sadari kakimu tergigit\noleh salah satu kadalnya.\nKamu terjatuh, dan siap menjadi\nsantapan kadal-kadal tersebut . . .");
 		choice1.setText(". . .");
@@ -550,6 +676,11 @@ public class game {
 	public void lorong2_2_decimate() {
 		filepath = "Kolleps.wav";
 		audio.playMusic(filepath);
+		if (b17 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b17 = true;
+		}
 		position = "lorong2_2_decimate";
 		textArea.setText("Tebasan pertama, kadal pertama mati.\nKamu mulai siap untuk menghitung mayat\nyang akan bergelimpangan,\n maupun salah satu dari\nmayat tersebut adalah dirimu.\nKadal kedua, ketiga, dan keempat tumbang.\nKadal-kadal tersebut mulai berhamburan.\nAda yang siap menyerang dirimu, ada yang\nberlari-lari menjauh. Kamu tidak peduli.");
 		choice1.setText("Terus. . .");
@@ -595,6 +726,11 @@ public class game {
 	public void lorong2_2_decimate_3() {
 		filepath = "Kolleps.wav";
 		audio.playMusic(filepath);
+		if (b18 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b18 = true;
+		}
 		position = "lorong2_2_decimate_3";
 		playerHP = playerHP - 1;
 		playerHPBar.pop();
@@ -666,6 +802,11 @@ public class game {
 		filepath = "Kolleps.wav";
 		audio.playMusic(filepath);
 		position = "lorong2_2_decimate_6";
+		if (b19 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b19 = true;
+		}
 		mainwindow.getContentPane().setBackground(black_red);
 		choicePanel.setBackground(black_red);
 		mainPanel.setBackground(black_red);
@@ -694,6 +835,11 @@ public class game {
 	
 	public void lorong2_2_devil() {
 		position = "lorong2_2_devil";
+		if (b20 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b20 = true;
+		}
 		mainwindow.getContentPane().setBackground(crimson);
 		choicePanel.setBackground(crimson);
 		mainPanel.setBackground(coal_black);
@@ -756,6 +902,11 @@ public class game {
 		filepath = "Devil1.wav";
 		audio.playMusic(filepath);
 		position = "lorong2_2_devil_accept";
+		if (b21 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b21 = true;
+		}
 		strength = strength + 14;
 		deal = 1;
 		playerWeapon = "Janji setan";
@@ -769,6 +920,11 @@ public class game {
 	
 	public void lorong2_2_devil_decline() {
 		position = "lorong2_2_devil_decline";
+		if (b22 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b22 = true;
+		}
 		textArea.setText("'Yah. . .Sayang sekali kawan' kata dia sedih.\n'Kalau begitu aku tinggalkan tubuh sekaratmu\ndisini saja ya!'\n'Kamu tidak menyadari kamu masih bisa cukup\nsadar untuk berdiri karena aku?'\nKetika dia bilang itu, seketika\ntubuhmu tumbang.\n'Ketika kamu sudah meningggalkan tubuhmu,\nmungkin itu saatnya aku bekerja.'");
 		choice1.setText("H..a.h..");
 		choice2.setText("");
@@ -777,8 +933,12 @@ public class game {
 	}
 	
 	public void lorong2_2_defend() {
-		
 		position = "lorong2_2_defend";
+		if (b23 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b23 = true;
+		}
 		mainwindow.getContentPane().setBackground(darkGreen);
 		choicePanel.setBackground(darkGreen);
 		textArea.setText("Memegang pedangmu dengan erat, kamu siap\nmenangkis setiap kadal yang akan menyerangmu.\nSecara sigap kamu berjalan menuju pintu keluar diujung ruangan secara pelan-pelan.\nSatu persatu kadal meluncur ke dirimu, kamu\ntebas tanpa ampun.");
@@ -837,6 +997,11 @@ public class game {
 		filepath = "Heal5.wav";
 		audio.playMusic(filepath);
 		position = "lorong2_2_defend_5";
+		if (b24 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b24 = true;
+		}
 		playerHP = playerHP + 4;
 		for (int n = 0; n < 4 ; n++) {
 			playerHPBar.push("|");
@@ -856,9 +1021,50 @@ public class game {
 		choice1.setText("Next");
 	}
 	
+	public void lorong3_1() {
+		position = "lorong3_1";
+		textArea.setText("Lorong tersebut terlihat sangat kasar\ndan tidak teratur.\nTetapi kamu memberanikan dirimu untuk melewati lorong tersebut.\nBanyak sekali batuan yang mencuat, membuat dirimu kesulitan\nuntuk melanjutkan perjalananmu.");
+		choice1.setText("Duh. . .");
+		choice2.setText("");
+		choice3.setText("");
+		choice4.setText("");
+		choice2.setVisible(false);
+		choice3.setVisible(false);
+		choice4.setVisible(false);
+	}
+	
+	public void lorong3_1_1() {
+		position = "lorong3_1_1";
+		textArea.setText("Beberapa kali kepala kamu terbentur dengan\natap lorong tersebut yang tidak beraturan.\nKamu hanya bisa berdoa tidak menabrak bongkahan batu besar didepanmu");
+		choice1.setText("Agh. . .");
+		choice2.setText("");
+		choice3.setText("");
+		choice4.setText("");
+		choice2.setVisible(false);
+		choice3.setVisible(false);
+		choice4.setVisible(false);
+	}
+	
+	public void lorong3_1_2() {
+		position = "lorong3_1_2";
+		textArea.setText("Lorong tersebut menyusut dan menyusut\nhingga");
+		choice1.setText("Agh. . .");
+		choice2.setText("");
+		choice3.setText("");
+		choice4.setText("");
+		choice2.setVisible(false);
+		choice3.setVisible(false);
+		choice4.setVisible(false);
+	}
+	
 	public void boss() {
 		position = "boss";
-		textArea.setText("Kamu sampai di suatu goa raksasa, dengan\nobor yang redup menerangi goa tersebut.\nKamu merasa suatu keberadaan yang menyeramkan di goa tersebut...");
+		if (b25 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b25 = true;
+		}
+		textArea.setText("Kamu sampai di suatu goa raksasa, dengan obor yang redup menerangi goa tersebut.\nKamu merasa suatu keberadaan yang menyeramkan di goa tersebut. . .\n");
 		choice1.setText("Next");
 		choice2.setText("");
 		choice3.setText("");
@@ -887,6 +1093,11 @@ public class game {
 	
 	public void boss_battle() {
 		position = "boss_battle";
+		if (b26 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b26 = true;
+		}
 		textArea.setText("Memegang senjata terpercayamu,\nkamu siap menyerang.");
 		choice1.setText("Serang");
 	}
@@ -915,6 +1126,11 @@ public class game {
 	
 	public void boss_defeated() {
 		position = "boss_defeated";
+		if (b27 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b27 = true;
+		}
 		textArea.setText("Tubuhmu sudah sangat lemah untuk\n tetap menerima serangan selanjutnya dari monster tersebut.\nKamu mencoba untuk menangkis kembali serangan dari monster itu,\ntetapi dengan tidak ada tenaga, badanmu dengan mudah terlempar jauh.\nTanpa ampun,tubuhmu dihabiskan monster tersebut. . .");
 		choice1.setText("Agh. . .");
 	}
@@ -933,6 +1149,11 @@ public class game {
 	
 	public void boss_win() {
 		position = "boss_win";
+		if (b28 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b28 = true;
+		}
 		mainwindow.getContentPane().setBackground(gold);
 		choicePanel.setBackground(gold);
 		mainPanel.setBackground(Color.lightGray);
@@ -985,6 +1206,11 @@ public class game {
 		filepath = "Victory1.wav";
 		audio.playMusic(filepath);
 		position = "win";
+		if (b29 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b29 = true;
+		}
 		for (int n = playerHP ; n>0 ; n--) {
 			playerHPBar.pop();
 		}
@@ -995,16 +1221,21 @@ public class game {
 		textArea.setText("[Selamat! Kamu berhasil memenangkan permainan ini!]\n\nSilahkan coba rute dan kombinasi lain pada\npermainan ini!");
 		choice1.setText("");
 		choice2.setText("");
-		choice3.setText("");
+		choice3.setText("Credits");
 		choice4.setText("Restart?");
 		choice1.setVisible(false);
 		choice2.setVisible(false);
-		choice3.setVisible(false);
 		choice4.setVisible(true);
 	}
 	
+	
 	public void dead() {
 		position = "dead";
+		if (b30 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b30 = true;
+		}
 		mainwindow.getContentPane().setBackground(coal_black);
 		choicePanel.setBackground(coal_black);
 		mainPanel.setBackground(crimson);
@@ -1045,6 +1276,11 @@ public class game {
 		filepath = "Devil2.wav";
 		audio.playMusic(filepath);
 		position = "dead_devil";
+		if (b31 == false) {
+			progress = progress +1;
+			gameProgress.setValue(progress);
+			b31 = true;
+		}
 		mainwindow.getContentPane().setBackground(coal_black);
 		choicePanel.setBackground(coal_black);
 		mainPanel.setBackground(crimson);
